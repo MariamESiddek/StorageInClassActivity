@@ -1,19 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-   Sample data extraction rules file; uncomment and customize as necessary.
-   See https://developer.android.com/about/versions/12/backup-restore#xml-changes
-   for details.
--->
-<data-extraction-rules>
+<?xml version="1.0" encoding="utf-8"?>
+<data-extraction-rules xmlns:tools="http://schemas.android.com/tools">
     <cloud-backup>
-        <!-- TODO: Use <include> and <exclude> to control what is backed up.
-        <include .../>
-        <exclude .../>
-        -->
+        <!-- Include SharedPreferences for saving comic details -->
+        <include domain="sharedpref" path="comics.xml" />
+
+        <!-- Include the entire app's files directory -->
+        <include domain="file" path="." />
+        <!-- Exclude cache files to save space -->
+        <exclude domain="cache" path="."
+            tools:ignore="FullBackupContent" />
+
+        <!-- Exclude temporary files in a temp directory -->
+        <exclude domain="file" path="temp/" />
     </cloud-backup>
-    <!--
+
     <device-transfer>
-        <include .../>
-        <exclude .../>
+        <!-- Include SharedPreferences for comic details -->
+        <include domain="sharedpref" path="comics.xml" />
+
+        <!-- Include only specific files needed for the app -->
+        <include domain="file" path="images/" />
+
+        <!-- Exclude log files if any -->
+        <exclude domain="file" path="logs/"
+            tools:ignore="FullBackupContent" />
+
+        <!-- Exclude cache to prevent redundant data transfer -->
+        <exclude domain="cache" path="."
+            tools:ignore="FullBackupContent" />
     </device-transfer>
-    -->
 </data-extraction-rules>
